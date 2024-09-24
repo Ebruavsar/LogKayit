@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using LOG.DataAccess;
 using LOG.Network;
+using static LOG.DataAccess.FileLogRepository;
 
 namespace LOG.BusinessLogic
 {
@@ -33,16 +34,16 @@ namespace LOG.BusinessLogic
 
     public class LogClientBusiness
     {
-        public void SendLog(string serverIp, int port, string logMessage)
+        public void SendLog(string serverIp, int port, LogLevel level, string logMessage, string userName)
         {
             TcpLogClient client = new TcpLogClient();
-            client.SendLog(serverIp, port, logMessage); // TCP üzerinden log mesajını gönder
+            client.SendLog(serverIp, port,level, logMessage, userName); // TCP üzerinden log mesajını gönder
         }
 
-        public void SendPeriodikLog(string serverIp, int port, string logMessage,System.Timers.Timer timer)
+        public void SendPeriodikLog(string serverIp, int port, LogLevel level, string logMessage, string userName, System.Timers.Timer timer)
         {
             TcpLogClient client = new TcpLogClient();
-            client.SendPeriodikLog(serverIp, port, logMessage, timer); // TCP üzerinden log mesajını gönder
+            client.SendPeriodikLog(serverIp, port, level, logMessage, userName, timer); // TCP üzerinden log mesajını gönder
         }
     }
 }

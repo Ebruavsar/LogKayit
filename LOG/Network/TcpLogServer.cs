@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using LOG.DataAccess;
+using static LOG.DataAccess.FileLogRepository;
 
 namespace LOG.Network
 {
@@ -33,6 +34,9 @@ namespace LOG.Network
 
         }
 
+
+
+        // TCP istemcisi ile gelen log mesajını işleyelim
         private async Task HandleClientAsync(TcpClient client)
         {
             NetworkStream stream = client.GetStream();
@@ -42,11 +46,29 @@ namespace LOG.Network
             while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) != 0)
             {
                 string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                _logRepository.WriteLog(message); // Gelen mesajı veri erişim katmanına ileterek log dosyasına yaz
+
+                // Mesajı virgülle ayır
+                string[] logParts = message.Split(',');
+
+                if (logParts.Length == 4) // Eğer 4 parça varsa
+                {
+                    // DateTime logTime = DateTime.Parse(logParts[0]); // Tarih
+                    LogLevel level = (LogLevel)Enum.Parse(typeof(LogLevel), logParts[1]); // Log seviyesi
+                    string logMessage = logParts[2]; // Mesaj
+                    string userName = logParts[3]; // Kullanıcı adı
+
+                    // Log kaydını yaz
+                    _logRepository.WriteLog(level, logMessage, userName);
+                }
+                else
+                {
+                    Console.WriteLine($"Geçersiz log formati: {message}");
+                }
             }
 
             client.Close();
         }
+
 
         public void StopServer()
         {
@@ -56,15 +78,22 @@ namespace LOG.Network
     }
     public class TcpLogClient
     {
-        public void SendLog(string serverIp, int port, string logMessage)
+        public void SendLog(string serverIp, int port, LogLevel level, string logMessage, string userName)
         {
             try
             {
                 using (TcpClient client = new TcpClient(serverIp, port))
                 {
                     NetworkStream stream = client.GetStream();
-                    byte[] data = Encoding.UTF8.GetBytes(logMessage);
-                    stream.Write(data, 0, data.Length); // Mesajı sunucuya gönder
+
+                    // Log mesajını formatlayın
+                    string formattedMessage = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss},{level},{logMessage},{userName}";
+
+                    // Formatlanmış mesajı UTF8 ile byte dizisine çevirin
+                    byte[] data = Encoding.UTF8.GetBytes(formattedMessage);
+
+                    // Mesajı sunucuya gönder
+                    stream.Write(data, 0, data.Length);
                 }
             }
             catch (Exception ex)
@@ -73,15 +102,22 @@ namespace LOG.Network
             }
         }
 
-        public void SendPeriodikLog(string serverIp, int port, string logMessage, System.Timers.Timer timer)
+        public void SendPeriodikLog(string serverIp, int port, LogLevel level, string logMessage, string userName, System.Timers.Timer timer)
         {
             try
             {
                 using (TcpClient client = new TcpClient(serverIp, port))
                 {
                     NetworkStream stream = client.GetStream();
-                    byte[] data = Encoding.UTF8.GetBytes(logMessage);
-                    stream.Write(data, 0, data.Length); // Mesajı sunucuya gönder
+
+                    // Log mesajını formatlayın
+                    string formattedMessage = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss},{level},{logMessage},{userName}";
+
+                    // Formatlanmış mesajı UTF8 ile byte dizisine çevirin
+                    byte[] data = Encoding.UTF8.GetBytes(formattedMessage);
+
+                    // Mesajı sunucuya gönder
+                    stream.Write(data, 0, data.Length);
                 }
             }
             catch (Exception ex)

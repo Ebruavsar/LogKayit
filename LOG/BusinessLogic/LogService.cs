@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LOG.BusinessLogic
 {
-    internal class LogService
+    public class LogService
     {
         
 

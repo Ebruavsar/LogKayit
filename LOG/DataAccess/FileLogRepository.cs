@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace LOG.DataAccess
 {
@@ -11,16 +12,29 @@ namespace LOG.DataAccess
     {
         private string logFilePath;
 
+        
         public FileLogRepository()
         {
-            logFilePath = GetLogFilePath(); // Log dosyasının adını oluştur
+            _logFilePath = GetLogFilePath(); // Log dosyasının adını oluştur ve atama yap
+        }
+        private readonly string _logFilePath;
+
+
+        // Log seviyeleri enum'u
+        public enum LogLevel
+        {
+            Info,
+            Error,
+            Warning
         }
 
-        public void WriteLog(string message)
+        public void WriteLog(LogLevel level, string message, string userName)
         {
-            using (StreamWriter writer = new StreamWriter(logFilePath, true)) // Dosyaya ekleme modunda yaz
+            string logEntry = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss},{level},{message},{userName}";
+
+            using (StreamWriter writer = new StreamWriter(_logFilePath, true))
             {
-                writer.WriteLine($"{DateTime.Now}: {message}"); // Zaman damgası ile log yaz
+                writer.WriteLine(logEntry); // Zaman damgası ile log yaz
             }
         }
 
