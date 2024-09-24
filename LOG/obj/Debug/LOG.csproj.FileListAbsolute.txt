@@ -10,3 +10,15 @@ C:\Users\ebrua\Desktop\LOG\obj\Debug\LOG.csproj.CoreCompileInputs.cache
 C:\Users\ebrua\Desktop\LOG\obj\Debug\LOG.exe
 C:\Users\ebrua\Desktop\LOG\obj\Debug\LOG.pdb
 C:\Users\ebrua\Desktop\LOG\obj\Debug\LOG.LogSunucu.resources
+C:\Users\ebrua\Desktop\LogKayit\LOG\bin\Debug\LOG.exe.config
+C:\Users\ebrua\Desktop\LogKayit\LOG\bin\Debug\LOG.exe
+C:\Users\ebrua\Desktop\LogKayit\LOG\bin\Debug\LOG.pdb
+C:\Users\ebrua\Desktop\LogKayit\LOG\obj\Debug\LOG.csproj.AssemblyReference.cache
+C:\Users\ebrua\Desktop\LogKayit\LOG\obj\Debug\LOG.csproj.SuggestedBindingRedirects.cache
+C:\Users\ebrua\Desktop\LogKayit\LOG\obj\Debug\LOG.Form1.resources
+C:\Users\ebrua\Desktop\LogKayit\LOG\obj\Debug\LOG.LogSunucu.resources
+C:\Users\ebrua\Desktop\LogKayit\LOG\obj\Debug\LOG.Properties.Resources.resources
+C:\Users\ebrua\Desktop\LogKayit\LOG\obj\Debug\LOG.csproj.GenerateResource.cache
+C:\Users\ebrua\Desktop\LogKayit\LOG\obj\Debug\LOG.csproj.CoreCompileInputs.cache
+C:\Users\ebrua\Desktop\LogKayit\LOG\obj\Debug\LOG.exe
+C:\Users\ebrua\Desktop\LogKayit\LOG\obj\Debug\LOG.pdb

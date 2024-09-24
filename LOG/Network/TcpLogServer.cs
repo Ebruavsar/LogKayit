@@ -72,5 +72,23 @@ namespace LOG.Network
                 Console.WriteLine($"Hata: {ex.Message}");
             }
         }
+
+        public void SendPeriodikLog(string serverIp, int port, string logMessage, System.Timers.Timer timer)
+        {
+            try
+            {
+                using (TcpClient client = new TcpClient(serverIp, port))
+                {
+                    NetworkStream stream = client.GetStream();
+                    byte[] data = Encoding.UTF8.GetBytes(logMessage);
+                    stream.Write(data, 0, data.Length); // Mesajı sunucuya gönder
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Hata: {ex.Message}");
+            }
+
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using LOG.DataAccess;
 using LOG.Network;
@@ -36,6 +37,12 @@ namespace LOG.BusinessLogic
         {
             TcpLogClient client = new TcpLogClient();
             client.SendLog(serverIp, port, logMessage); // TCP üzerinden log mesajını gönder
+        }
+
+        public void SendPeriodikLog(string serverIp, int port, string logMessage,System.Timers.Timer timer)
+        {
+            TcpLogClient client = new TcpLogClient();
+            client.SendPeriodikLog(serverIp, port, logMessage, timer); // TCP üzerinden log mesajını gönder
         }
     }
 }
