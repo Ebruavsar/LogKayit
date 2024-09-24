@@ -27,7 +27,15 @@ namespace LOG.DataAccess
         private string GetLogFilePath()
         {
             string fileName = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".log"; // Tarih ve saate göre dosya ismi
-            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); // Dosya masaüstüne kaydedilir
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);                 
+            string folderPath = Path.Combine(desktopPath, "Loglar");// Masaüstünde "Loglar" klasörünün yolunu oluştur
+
+            // Klasör yoksa oluştur
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
             return Path.Combine(folderPath, fileName);
         }
     }

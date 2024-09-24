@@ -58,12 +58,19 @@ namespace LOG
             timer.Start();
 
             logClientBusiness.SendPeriodikLog(serverIp, port, logMessage, timer); // Log mesajını gönder
-            label1.Text = "Log mesajı gönderildi.";
+            label1.Text = "Log mesajı gönderiliyor..";
 
         }
         private void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
             button3_Click(sender, e);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            logServerBusiness.StopServer();
+            label1.Text = "Log sunucusu bağlantısı kesildi.";
+
         }
     }
 }
