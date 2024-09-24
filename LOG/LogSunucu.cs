@@ -114,5 +114,7 @@ namespace LOG
             label1.Text = "Log sunucusu bağlantısı kesildi.";
 
         }
+
+       
     }
 }
