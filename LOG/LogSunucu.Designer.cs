@@ -59,33 +59,33 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(194, 92);
+            this.numericUpDown1.Location = new System.Drawing.Point(195, 97);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 1;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(300, 408);
+            this.button1.Location = new System.Drawing.Point(119, 423);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(238, 23);
             this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
+            this.button1.Text = "connect";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(227, 360);
+            this.label1.Location = new System.Drawing.Point(227, 355);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(19, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "label1";
+            this.label1.Text = "....";
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(194, 408);
+            this.textBox2.Location = new System.Drawing.Point(194, 388);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 20);
             this.textBox2.TabIndex = 4;
@@ -100,7 +100,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(75, 413);
+            this.label2.Location = new System.Drawing.Point(75, 393);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(113, 13);
             this.label2.TabIndex = 6;
@@ -133,11 +133,11 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(323, 249);
+            this.button2.Location = new System.Drawing.Point(119, 310);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(102, 23);
             this.button2.TabIndex = 10;
-            this.button2.Text = "button2";
+            this.button2.Text = "send";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -161,21 +161,21 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(323, 290);
+            this.button3.Location = new System.Drawing.Point(255, 310);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(102, 23);
             this.button3.TabIndex = 13;
-            this.button3.Text = "button3";
+            this.button3.Text = "periodic send";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(300, 448);
+            this.button4.Location = new System.Drawing.Point(119, 463);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(238, 23);
             this.button4.TabIndex = 14;
-            this.button4.Text = "button4";
+            this.button4.Text = "disconnect";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -201,21 +201,20 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(138, 151);
+            this.label7.Location = new System.Drawing.Point(125, 152);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.Size = new System.Drawing.Size(50, 13);
             this.label7.TabIndex = 17;
-            this.label7.Text = "label7";
-           
+            this.label7.Text = "Log level";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(135, 193);
+            this.label8.Location = new System.Drawing.Point(116, 193);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(35, 13);
+            this.label8.Size = new System.Drawing.Size(63, 13);
             this.label8.TabIndex = 18;
-            this.label8.Text = "label8";
+            this.label8.Text = "Kullanıcı adı";
             // 
             // LogSunucu
             // 

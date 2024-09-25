@@ -27,6 +27,11 @@ namespace LOG
             logClientBusiness = new LogClientBusiness();
             timer = new System.Timers.Timer();
             timer.Elapsed += OnTimedEvent; // Timer olayı
+
+            // Diğer butonları başlangıçta devre dışı bırak
+            button2.Enabled = false;
+            button3.Enabled = false;
+            button4.Enabled = false;
         }
         private LogServerBusiness logServerBusiness;
         private LogClientBusiness logClientBusiness;
@@ -38,6 +43,11 @@ namespace LOG
             int port = Convert.ToInt32(textBox2.Text); // Port numarasını UI'dan al
             logServerBusiness.StartServer(port); // Sunucu başlat
             label1.Text = "Log sunucusu başlatıldı.";
+
+            // Sunucu başlatıldığında diğer butonları etkinleştir
+            button2.Enabled = true;
+            button3.Enabled = true;
+            button4.Enabled = true;
         }
 
         // Log mesajı gönderen buton
@@ -112,6 +122,10 @@ namespace LOG
         {
             logServerBusiness.StopServer();
             label1.Text = "Log sunucusu bağlantısı kesildi.";
+
+            //butonlar devre dışı bırakıldı
+            button2.Enabled = false;
+            button3.Enabled = false;
 
         }
 
