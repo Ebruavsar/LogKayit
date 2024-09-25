@@ -232,6 +232,8 @@ namespace LOG
 
             // Satırların sadece okunabilir olmasını sağla
             dataGridView.ReadOnly = true;
+
+            
         }
 
 
@@ -261,13 +263,20 @@ namespace LOG
         {
             if (tabControl1.SelectedTab != null && tabControl1.SelectedTab.Controls[0] is DataGridView logGridView)
             {
-                // DataGridView'deki logları al
-                var logEntries = (List<LogEntry>)logGridView.DataSource;
+                // DataGridView'deki logları DataTable olarak al
+                var logTable = logGridView.DataSource as DataTable;
 
-                // Raporlama formunu aç
-                Raporla raporlaForm = new Raporla(logEntries);
-                raporlaForm.StartPosition = FormStartPosition.CenterScreen;
-                raporlaForm.Show();
+                if (logTable != null)
+                {
+                    // Raporlama formunu aç
+                    Raporla raporlaForm = new Raporla(logTable); // DataTable'ı rapor formuna geçir
+                    raporlaForm.StartPosition = FormStartPosition.CenterScreen;
+                    raporlaForm.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Log verileri alınamadı.");
+                }
             }
             else
             {
