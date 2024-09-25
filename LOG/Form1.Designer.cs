@@ -33,6 +33,7 @@
             this.sunucu = new System.Windows.Forms.Button();
             this.güncel = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.Raporla = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -82,11 +83,22 @@
             this.tabControl1.TabIndex = 50;
             this.tabControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabControl1_MouseDown);
             // 
+            // Raporla
+            // 
+            this.Raporla.Location = new System.Drawing.Point(213, 21);
+            this.Raporla.Name = "Raporla";
+            this.Raporla.Size = new System.Drawing.Size(75, 23);
+            this.Raporla.TabIndex = 51;
+            this.Raporla.Text = "Raporla";
+            this.Raporla.UseVisualStyleBackColor = true;
+            this.Raporla.Click += new System.EventHandler(this.Raporla_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1026, 560);
+            this.Controls.Add(this.Raporla);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.güncel);
             this.Controls.Add(this.sunucu);
@@ -105,6 +117,7 @@
         private System.Windows.Forms.Button sunucu;
         private System.Windows.Forms.Button güncel;
         private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.Button Raporla;
     }
 }
 

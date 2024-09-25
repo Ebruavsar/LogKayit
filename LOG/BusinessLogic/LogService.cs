@@ -11,27 +11,31 @@ namespace LOG.BusinessLogic
 {
     public class LogService
     {
-        
 
-        public DataTable LoadLogs(string filePath)
+        public List<LogEntry> LoadLogs(string filePath)
         {
-            var logTable = new DataTable();
-            logTable.Columns.Add("Tarih", typeof(DateTime));
-            logTable.Columns.Add("Level", typeof(string));
-            logTable.Columns.Add("Mesaj", typeof(string));
-            logTable.Columns.Add("Kullanıcı Adı", typeof(string));
+            var logEntries = new List<LogEntry>();
 
             string[] logLines = File.ReadAllLines(filePath);
 
             foreach (string line in logLines)
             {
                 string[] logParts = line.Split(',');
+
                 if (logParts.Length == 4)
                 {
                     DateTime logTime;
                     if (DateTime.TryParse(logParts[0], out logTime))
                     {
-                        logTable.Rows.Add(logTime, logParts[1], logParts[2], logParts[3]);
+                        var logEntry = new LogEntry
+                        {
+                            Tarih = logTime,
+                            Severity = logParts[1],
+                            Message = logParts[2],
+                            KullaniciAdi = logParts[3]
+                        };
+
+                        logEntries.Add(logEntry);
                     }
                     else
                     {
@@ -44,7 +48,7 @@ namespace LOG.BusinessLogic
                 }
             }
 
-            return logTable; // Yüklenen logları döndür
+            return logEntries; // Yüklenen logları LogEntry listesi olarak döndür
         }
     }
 }

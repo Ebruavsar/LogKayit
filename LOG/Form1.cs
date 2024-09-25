@@ -256,6 +256,32 @@ namespace LOG
                 }
             }
         }
+
+        private void Raporla_Click(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab != null && tabControl1.SelectedTab.Controls[0] is DataGridView logGridView)
+            {
+                // DataGridView'deki logları al
+                var logEntries = (List<LogEntry>)logGridView.DataSource;
+
+                // Raporlama formunu aç
+                Raporla raporlaForm = new Raporla(logEntries);
+                raporlaForm.StartPosition = FormStartPosition.CenterScreen;
+                raporlaForm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Lütfen raporlamak için bir log dosyası seçin.");
+            }
+        }
+
+        DataGridView logGridView = new DataGridView
+        {
+            DataSource = logEntries, // LogEntry listesini ata
+            Dock = DockStyle.Fill,
+            ReadOnly = true
+        };
+        private static object logEntries;
     }
 }
 
