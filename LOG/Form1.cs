@@ -184,11 +184,87 @@ namespace LOG
 
             var logEntries = logService.LoadLogs(filePath);
 
+            // Yeni bir sekme (TabPage) oluştur
             TabPage tabPage = new TabPage
             {
                 Text = tabTitle // Sekme başlığı
             };
 
+            // SplitContainer oluştur
+            SplitContainer splitContainer = new SplitContainer
+            {
+                Dock = DockStyle.Fill,
+                Orientation = Orientation.Horizontal, // Yatay bölme
+                SplitterDistance = 50, // Üst bölmenin boyutu (buton için daha az yer)
+                IsSplitterFixed = true, // Bölmeyi sabitle
+                FixedPanel = FixedPanel.Panel1 // Üst panel sabit kalır
+            };
+
+            // Üst bölmeye buton ekle
+            Button customButton = new Button
+            {
+                Text = "Filtre Ekranı", // Buton metni
+                Size = new Size(100, 30), // Buton boyutu
+                Location = new Point(10, 5) // Butonun konumu
+            };
+            
+
+            // Butonun click olayını tanımla
+            customButton.Click += (sender, e) =>
+            {
+                FiltreEkrani form1 = new FiltreEkrani();
+                {
+                    form1.StartPosition = FormStartPosition.CenterScreen;
+                    form1.Show();
+                }
+            };
+
+            // Üst bölmeye buton ekle
+            Button ButtonFiltreUygula = new Button
+            {
+                Text = "Filtre Uygula", // Buton metni
+                Size = new Size(100, 30), // Buton boyutu
+                Location = new Point(120, 5) // Butonun konumu
+            };
+            ButtonFiltreUygula.Click += (sender, e) =>
+            {
+                FiltreEkrani form1 = new FiltreEkrani();
+                {
+                    form1.StartPosition = FormStartPosition.CenterScreen;
+                    form1.Show();
+                }
+            };
+
+            // Üst bölmeye buton ekle
+            Button ButtonFiltreTemizle = new Button
+            {
+                Text = "Filtre Temizle", // Buton metni
+                Size = new Size(100, 30), // Buton boyutu
+                Location = new Point(230, 5) // Butonun konumu
+            };
+            ButtonFiltreTemizle.Click += (sender, e) =>
+            {
+                FiltreEkrani form1 = new FiltreEkrani();
+                {
+                    form1.StartPosition = FormStartPosition.CenterScreen;
+                    form1.Show();
+                }
+            };
+
+            Label uygulananFiltre = new Label
+            {
+                Text = "uygulanan filtre",
+                
+                Location = new Point(340,10)
+            };
+
+            // Üst bölmeye buton ekle
+            splitContainer.Panel1.Controls.Add(customButton);
+            splitContainer.Panel1.Controls.Add(ButtonFiltreUygula);
+            splitContainer.Panel1.Controls.Add(ButtonFiltreTemizle);
+            splitContainer.Panel1.Controls.Add(uygulananFiltre);
+
+            // Alt bölmeye DataGridView ekle
             DataGridView logGridView = new DataGridView
             {
                 DataSource = logEntries,
@@ -199,8 +275,12 @@ namespace LOG
             // DataGridView'i özelleştir
             CustomizeDataGridView(logGridView);
 
-            // TabPage'e DataGridView ekle
-            tabPage.Controls.Add(logGridView);
+            splitContainer.Panel2.Controls.Add(logGridView); // Alt bölmeye DataGridView ekle
+
+            // TabPage'e SplitContainer ekle
+            tabPage.Controls.Add(splitContainer);
+
+            // TabControl'e yeni sekme ekle
             tabControl1.TabPages.Add(tabPage);
 
             // TabControl stilini uygula

@@ -53,7 +53,7 @@ namespace LOG
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    textBoxDizin.Text = dialog.SelectedPath;
+                    label1.Text = dialog.SelectedPath;
                 }
             }
         }
@@ -61,7 +61,7 @@ namespace LOG
         private void ButtonRaporla_Click(object sender, EventArgs e)
         {
             string selectedFormat = comboBoxFormat.SelectedItem.ToString();
-            string directory = textBoxDizin.Text;
+            string directory = label1.Text;
 
             if (string.IsNullOrEmpty(directory))
             {
@@ -103,29 +103,49 @@ namespace LOG
                 // Yeni sayfa ekle
                 PdfPage page = document.AddPage();
                 XGraphics gfx = XGraphics.FromPdfPage(page);
-                XFont font = new XFont("Verdana", 12); // XFontStyle.Normal kullanın
+                XFont font = new XFont("Verdana", 12);
 
                 // Başlık ekle
                 gfx.DrawString("Log Raporu", new XFont("Verdana", 14), XBrushes.Black,
                     new XRect(0, 0, page.Width, 50), XStringFormats.TopCenter);
                 gfx.DrawString($"Rapor Tarihi: {DateTime.Now}", font, XBrushes.Black, 50, 50);
 
-                // Tablonun başlıklarını ekle
-                gfx.DrawString("Tarih", font, XBrushes.DarkBlue, 50, 100);
-                gfx.DrawString("Level", font, XBrushes.DarkBlue, 200, 100);
-                gfx.DrawString("Mesaj", font, XBrushes.DarkBlue, 300, 100);
-                gfx.DrawString("Kullanıcı Adı", font, XBrushes.DarkBlue, 500, 100);
+                // Tablonun başlıklarını ekle ve renkli hücreler yap
+                int xTarih = 50, xLevel = 200, xMesaj = 250, xKullaniciAdi = 450;
+                int y = 100; // Başlangıç y koordinatı
+                int cellHeight = 20; // Hücre yüksekliği
+                int cellWidthTarih = 150, cellWidthLevel = 80, cellWidthMesaj = 200, cellWidthKullaniciAdi = 100; // Hücre genişlikleri
 
-                int yPoint = 130;
+                // Tablo başlıkları için hücreler
+                gfx.DrawRectangle(XBrushes.DarkGreen, xTarih, y, cellWidthTarih, cellHeight);
+                gfx.DrawRectangle(XBrushes.DarkGreen, xLevel, y, cellWidthLevel, cellHeight);
+                gfx.DrawRectangle(XBrushes.DarkGreen, xMesaj, y, cellWidthMesaj, cellHeight);
+                gfx.DrawRectangle(XBrushes.DarkGreen, xKullaniciAdi, y, cellWidthKullaniciAdi, cellHeight);
 
-                // Log verilerini PDF'e ekle
+                gfx.DrawString("Tarih", font, XBrushes.BlanchedAlmond, new XRect(xTarih, y, cellWidthTarih, cellHeight), XStringFormats.Center);
+                gfx.DrawString("Level", font, XBrushes.BlanchedAlmond, new XRect(xLevel, y, cellWidthLevel, cellHeight), XStringFormats.Center);
+                gfx.DrawString("Mesaj", font, XBrushes.BlanchedAlmond, new XRect(xMesaj, y, cellWidthMesaj, cellHeight), XStringFormats.Center);
+                gfx.DrawString("Kullanıcı Adı", font, XBrushes.BlanchedAlmond, new XRect(xKullaniciAdi, y, cellWidthKullaniciAdi, cellHeight), XStringFormats.Center);
+
+                // Log verilerini eklemek için yPoint ayarı
+                y += cellHeight;
+
+                // Log verilerini PDF'e ekle (tablo satırları)
                 foreach (var log in logEntries)
                 {
-                    gfx.DrawString(log.Tarih.ToString(), font, XBrushes.Black, 50, yPoint);
-                    gfx.DrawString(log.Severity, font, XBrushes.Black, 200, yPoint);
-                    gfx.DrawString(log.Message, font, XBrushes.Black, 300, yPoint);
-                    gfx.DrawString(log.KullaniciAdi, font, XBrushes.Black, 500, yPoint);
-                    yPoint += 20;
+                    // Hücreleri renklendir
+                    gfx.DrawRectangle(XBrushes.LightGray, xTarih, y, cellWidthTarih, cellHeight);
+                    gfx.DrawRectangle(XBrushes.LightGray, xLevel, y, cellWidthLevel, cellHeight);
+                    gfx.DrawRectangle(XBrushes.LightGray, xMesaj, y, cellWidthMesaj, cellHeight);
+                    gfx.DrawRectangle(XBrushes.LightGray, xKullaniciAdi, y, cellWidthKullaniciAdi, cellHeight);
+
+                    // Hücre içerikleri
+                    gfx.DrawString(log.Tarih.ToString(), font, XBrushes.Black, new XRect(xTarih, y, cellWidthTarih, cellHeight), XStringFormats.Center);
+                    gfx.DrawString(log.Severity, font, XBrushes.Black, new XRect(xLevel, y, cellWidthLevel, cellHeight), XStringFormats.Center);
+                    gfx.DrawString(log.Message, font, XBrushes.Black, new XRect(xMesaj, y, cellWidthMesaj, cellHeight), XStringFormats.Center);
+                    gfx.DrawString(log.KullaniciAdi, font, XBrushes.Black, new XRect(xKullaniciAdi, y, cellWidthKullaniciAdi, cellHeight), XStringFormats.Center);
+
+                    y += cellHeight; // Bir sonraki satırın y konumunu ayarlayın
                 }
 
                 // PDF dosyasını kaydet

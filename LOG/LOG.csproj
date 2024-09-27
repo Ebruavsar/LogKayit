@@ -181,6 +181,12 @@
     <Compile Include="BusinessLogic\LogService.cs" />
     <Compile Include="DataAccess\FileLogRepository.cs" />
     <Compile Include="DataAccess\ILogRepository.cs" />
+    <Compile Include="FiltreEkrani.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FiltreEkrani.Designer.cs">
+      <DependentUpon>FiltreEkrani.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
