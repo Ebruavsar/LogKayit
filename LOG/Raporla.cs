@@ -12,11 +12,10 @@ using System.Windows.Forms;
 using System.Xml;
 using OfficeOpenXml; // EPPlus Namespace
 using System.Xml.Linq;
-using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
-using iText.Layout.Properties;
-using iText.Kernel.Exceptions;
+using System.Windows.Media;
+using PdfSharp.Pdf;
+using PdfSharp.Drawing;
+
 
 namespace LOG
 {
@@ -30,6 +29,7 @@ namespace LOG
             InitializeComponent();
             logService = new LogService();
 
+            // DataTable'dan logEntries listesine log verilerini aktarma
             logEntries = logTable.AsEnumerable().Select(row => new LogEntry
             {
                 Tarih = row.Field<DateTime>("Tarih"),
@@ -38,9 +38,11 @@ namespace LOG
                 KullaniciAdi = row.Field<string>("Kullanıcı Adı")
             }).ToList();
 
+            // Format seçenekleri ekleme
             comboBoxFormat.Items.AddRange(new string[] { "PDF", "XML", "XLSX" });
             comboBoxFormat.SelectedIndex = 0;
 
+            // Buton olaylarını bağlama
             buttonBrowse.Click += ButtonBrowse_Click;
             buttonRaporla.Click += ButtonRaporla_Click;
         }
@@ -92,54 +94,51 @@ namespace LOG
         {
             string filePath = Path.Combine(directory, "LogRapor.pdf");
 
-
             try
             {
-                using (PdfWriter writer = new PdfWriter(filePath))
+                // PdfSharp ile yeni PDF belgesi oluştur
+                PdfDocument document = new PdfDocument();
+                document.Info.Title = "Log Raporu";
+
+                // Yeni sayfa ekle
+                PdfPage page = document.AddPage();
+                XGraphics gfx = XGraphics.FromPdfPage(page);
+                XFont font = new XFont("Verdana", 12); // XFontStyle.Normal kullanın
+
+                // Başlık ekle
+                gfx.DrawString("Log Raporu", new XFont("Verdana", 14), XBrushes.Black,
+                    new XRect(0, 0, page.Width, 50), XStringFormats.TopCenter);
+                gfx.DrawString($"Rapor Tarihi: {DateTime.Now}", font, XBrushes.Black, 50, 50);
+
+                // Tablonun başlıklarını ekle
+                gfx.DrawString("Tarih", font, XBrushes.DarkBlue, 50, 100);
+                gfx.DrawString("Level", font, XBrushes.DarkBlue, 200, 100);
+                gfx.DrawString("Mesaj", font, XBrushes.DarkBlue, 300, 100);
+                gfx.DrawString("Kullanıcı Adı", font, XBrushes.DarkBlue, 500, 100);
+
+                int yPoint = 130;
+
+                // Log verilerini PDF'e ekle
+                foreach (var log in logEntries)
                 {
-                    using (PdfDocument pdf = new PdfDocument(writer))
-                    {
-                        Document document = new Document(pdf);
-
-                        // Başlık
-                        document.Add(new Paragraph("Log Raporu"));
-                        document.Add(new Paragraph($"Rapor Tarihi: {DateTime.Now}"));
-                        document.Add(new Paragraph("\n"));
-
-                        // Tablo oluştur
-                        Table table = new Table(4); // 4 sütun
-                        table.SetWidth(UnitValue.CreatePercentValue(100));
-
-                        // Başlıklar
-                        table.AddHeaderCell("Tarih");
-                        table.AddHeaderCell("Seviye");
-                        table.AddHeaderCell("Mesaj");
-                        table.AddHeaderCell("Kullanıcı Adı");
-
-                        // Log verilerini ekle
-                        foreach (var log in logEntries)
-                        {
-                            table.AddCell(log.Tarih.ToString());
-                            table.AddCell(log.Severity);
-                            table.AddCell(log.Message);
-                            table.AddCell(log.KullaniciAdi);
-                        }
-
-                        document.Add(table);
-                        document.Close();
-                    }
+                    gfx.DrawString(log.Tarih.ToString(), font, XBrushes.Black, 50, yPoint);
+                    gfx.DrawString(log.Severity, font, XBrushes.Black, 200, yPoint);
+                    gfx.DrawString(log.Message, font, XBrushes.Black, 300, yPoint);
+                    gfx.DrawString(log.KullaniciAdi, font, XBrushes.Black, 500, yPoint);
+                    yPoint += 20;
                 }
+
+                // PDF dosyasını kaydet
+                document.Save(filePath);
+                document.Close();
 
                 MessageBox.Show("PDF raporu başarıyla oluşturuldu!");
             }
-            catch (PdfException pdfEx)
-            {
-                MessageBox.Show($"PDF hatası: {pdfEx.Message}\n{pdfEx.StackTrace}");
-            }
             catch (Exception ex)
             {
-                MessageBox.Show($"Hata: {ex.Message}\n{ex.StackTrace}");
+                MessageBox.Show($"PDF oluşturulurken bir hata oluştu: {ex.Message}");
             }
+
         }
 
         private void ExportToXml(string directory)
